@@ -9,7 +9,7 @@ from discord.ext import commands, tasks
 from loguru import logger
 
 from creds import ip, port, password, console_controller_role_id, server_folder_path, console_channel_outp_id, \
-    log_file, d_bot_token
+    log_file, d_bot_token, jar_file
 
 intents = discord.Intents(guild_messages=True, members=True, guilds=True)
 d_bot = commands.Bot(command_prefix='%', help_command=commands.MinimalHelpCommand(),
@@ -117,7 +117,7 @@ async def start(ctx):
 
     d_bot.server_started = True
 
-    d_bot.process = await asyncio.create_subprocess_shell('java -Xmx4096M -Xms4096M -jar spigot-1.16.5.jar',
+    d_bot.process = await asyncio.create_subprocess_shell(f'java -Xmx4096M -Xms4096M -jar {jar_file}',
                                                           stdin=asyncio.subprocess.DEVNULL, stdout=subprocess.PIPE,
                                                           cwd=server_folder_path)
     # await d_bot.process.stdout
